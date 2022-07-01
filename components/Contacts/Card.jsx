@@ -1,9 +1,9 @@
 import Image from "next/image"
 import React, { useContext } from "react"
-import { Draggable } from "react-beautiful-dnd"
 import { MyContext } from "../Context"
 
 import styled from "styled-components"
+import { Draggable } from "react-beautiful-dnd"
 
 const StyledContact = styled.li`
     display: grid;
@@ -26,7 +26,7 @@ const Contact = ({ contact, index }) => {
     const { deleteContact, editContact } = useContext(MyContext)
 
     return (
-        <Draggable draggableId={contact.id} index={index}>
+        <Draggable key={contact.id} draggableId={contact.id} index={index}>
             {(provided) => (
                 <StyledContact
                     ref={provided.innerRef}

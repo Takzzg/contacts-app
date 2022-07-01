@@ -5,7 +5,7 @@ import { StyledIndex } from "../styles/index.styles"
 
 import { useContext, useEffect } from "react"
 import { MyContext } from "../components/Context"
-import { DragDropContext } from "react-beautiful-dnd"
+import { DragDropContext, resetServerContext } from "react-beautiful-dnd"
 import Contacts from "../components/Contacts/Contacts"
 import Groups from "../components/Groups/Groups"
 import GroupForm from "../components/Groups/Form"
@@ -37,4 +37,9 @@ export default function Home() {
             </DragDropContext>
         </StyledIndex>
     )
+}
+
+export async function getServerSideProps() {
+    resetServerContext()
+    return { props: {} }
 }

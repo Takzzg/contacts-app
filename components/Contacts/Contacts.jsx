@@ -30,7 +30,7 @@ const Contacts = () => {
                         {...provided.droppableProps}
                     >
                         {contacts?.map((c, i) => (
-                            <Contact key={c.id} index={i} contact={c} />
+                            <Contact key={c.id} contact={c} index={i} />
                         ))}
                         {provided.placeholder}
                     </ul>
