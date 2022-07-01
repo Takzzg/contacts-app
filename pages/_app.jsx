@@ -10,7 +10,3 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default MyApp
-
-export async function getServerSideProps() {
-    resetServerContext()
-}
