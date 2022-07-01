@@ -26,8 +26,8 @@ const Contacts = () => {
                 {(provided) => (
                     <ul
                         className="contactsList"
-                        {...provided.droppableProps}
                         ref={provided.innerRef}
+                        {...provided.droppableProps}
                     >
                         {contacts?.map((c, i) => (
                             <Contact key={c.id} index={i} contact={c} />

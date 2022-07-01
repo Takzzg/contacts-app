@@ -29,9 +29,9 @@ const Contact = ({ contact, index }) => {
         <Draggable draggableId={contact.id} index={index}>
             {(provided) => (
                 <StyledContact
+                    ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
-                    ref={provided.innerRef}
                 >
                     <span className="profilePic">
                         <Image

@@ -1,3 +1,4 @@
+import { resetServerContext } from "react-beautiful-dnd"
 import { MyProvider } from "../components/Context"
 
 function MyApp({ Component, pageProps }) {
@@ -9,3 +10,7 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default MyApp
+
+export async function getServerSideProps() {
+    resetServerContext()
+}

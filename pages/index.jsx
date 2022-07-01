@@ -5,7 +5,7 @@ import { StyledIndex } from "../styles/index.styles"
 
 import { useContext, useEffect } from "react"
 import { MyContext } from "../components/Context"
-import { DragDropContext, resetServerContext } from "react-beautiful-dnd"
+import { DragDropContext } from "react-beautiful-dnd"
 import Contacts from "../components/Contacts/Contacts"
 import Groups from "../components/Groups/Groups"
 import GroupForm from "../components/Groups/Form"
@@ -13,7 +13,6 @@ import ContactForm from "../components/Contacts/Form"
 
 export default function Home() {
     const { modal } = useContext(MyContext)
-    resetServerContext()
 
     return (
         <StyledIndex>
