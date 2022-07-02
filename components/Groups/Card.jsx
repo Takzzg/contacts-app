@@ -3,7 +3,8 @@ import { useDrop } from "react-dnd"
 import { MyContext } from "../Context"
 
 const Group = ({ group }) => {
-    const { contacts, groups, addContactToGroup } = useContext(MyContext)
+    const { contacts, groups, addContactToGroup, editGroup } =
+        useContext(MyContext)
 
     const [collected, drop] = useDrop(
         () => ({
@@ -21,6 +22,8 @@ const Group = ({ group }) => {
 
     return (
         <li ref={drop}>
+            <button onClick={() => editGroup(group.id)}>Edit</button>
+            <button>Delete</button>
             <span className="name">{group.name}</span>
             <span className="desc">{group.desc}</span>
             <span className="contacts">

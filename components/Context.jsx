@@ -75,6 +75,17 @@ export const MyProvider = ({ children }) => {
         setContactForm({ ...contactForm, picture })
     }
 
+    const editGroup = (id) => {
+        const group = storage.groups.find((g) => g.id === id)
+        const newForm = {
+            id: group.id,
+            name: group.name,
+            desc: group.desc
+        }
+        setGroupForm(newForm)
+        toggleGroupForm()
+    }
+
     const handleGroupForm = (e) => {
         setGroupForm({ ...groupForm, [e.target.name]: e.target.value })
     }
@@ -114,7 +125,9 @@ export const MyProvider = ({ children }) => {
     }
 
     const deleteAllContacts = () => {
-        handleUpdateState({ contacts: [], groups: storage.groups })
+        let groups = [...storage.groups]
+        groups = groups.map((g) => ({ ...g, contacts: [] }))
+        handleUpdateState({ contacts: [], groups })
     }
 
     const deleteContact = (id) => {
@@ -169,7 +182,9 @@ export const MyProvider = ({ children }) => {
     }
 
     const deleteAllGroups = () => {
-        handleUpdateState({ contacts: storage.contacts, groups: [] })
+        let contacts = [...storage.contacts]
+        contacts = contacts.map((c) => ({ ...c, groups: [] }))
+        handleUpdateState({ contacts, groups: [] })
     }
 
     const deleteGroup = (id) => {
@@ -184,10 +199,11 @@ export const MyProvider = ({ children }) => {
     const updateGroup = (id) => {
         let groups = [...storage.groups]
         let group = groups.find((g) => g.id === id)
+        groups = groups.filter((g) => g.id !== id)
 
         group = { ...group, name: groupForm.name, desc: groupForm.desc }
 
-        handleUpdateState({ ...storage, groups })
+        handleUpdateState({ ...storage, groups: [group, ...groups] })
     }
 
     const addContactToGroup = (idContact, idGroup) => {
@@ -226,6 +242,7 @@ export const MyProvider = ({ children }) => {
                 toggleGroupForm,
                 closeModal,
                 editContact,
+                editGroup,
                 contactForm,
                 groupForm,
                 handleContactForm,
