@@ -112,6 +112,13 @@ export const MyProvider = ({ children }) => {
         let contacts = [...storage.contacts]
         let oldFilters = { ...filters }
 
+        if (oldFilters.contacts.byGroup === id) {
+            oldFilters.contacts.byGroup = null
+            oldFilters.contacts.filteredIds = []
+            return setFilters(oldFilters)
+        }
+
+        oldFilters.contacts.byGroup = id
         oldFilters.contacts.filteredIds = contacts
             .filter((c) => c.groups.includes(id))
             .map((c) => c.id)
