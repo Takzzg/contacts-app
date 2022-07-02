@@ -31,9 +31,6 @@ export const MyProvider = ({ children }) => {
     const handleUpdateState = (state) => {
         setStorage(state)
         setLocalStorage(state)
-        console.log(
-            `handleUpdate groups: ${JSON.stringify(state.groups, null, 4)}`
-        )
     }
 
     // Forms
@@ -168,7 +165,6 @@ export const MyProvider = ({ children }) => {
         }
         let contacts = [...storage.contacts]
         let groups = [group, ...storage.groups]
-        console.log(`all groups: ${JSON.stringify(groups, null, 4)}`)
         handleUpdateState({ contacts, groups })
     }
 
@@ -198,30 +194,11 @@ export const MyProvider = ({ children }) => {
         let contacts = [...storage.contacts]
         let groups = [...storage.groups]
 
-        console.log(
-            `pre add contact to group all groups: ${JSON.stringify(
-                groups,
-                null,
-                4
-            )}`
-        )
-
         let contact = contacts.find((c) => c.id === idContact)
         let group = groups.find((g) => g.id === idGroup)
 
         !contact.groups.includes(idGroup) && contact.groups.push(idGroup)
         !group.contacts.includes(idContact) && group.contacts.push(idContact)
-
-        console.log(`Adding ${idContact} to group ${idGroup}`)
-        // console.log(`contact groups list: ${JSON.stringify(contact.groups)}`)
-        // console.log(`group contacts list: ${JSON.stringify(group.contacts)}`)
-        console.log(
-            `post add contact to group all groups: ${JSON.stringify(
-                groups,
-                null,
-                4
-            )}`
-        )
 
         handleUpdateState({ contacts, groups })
     }
