@@ -12,7 +12,8 @@ const Contacts = () => {
         contacts,
         deleteAllContacts,
         fetchMoreContacts,
-        toggleContactForm
+        toggleContactForm,
+        filters
     } = useContext(MyContext)
 
     const [collected, drop] = useDrop(() => ({
@@ -32,7 +33,12 @@ const Contacts = () => {
             <button onClick={fetchMoreContacts}>Fetch more Users</button>
 
             <div className="contactsList">
-                {contacts?.map((c) => (
+                {(filters.contacts.filteredIds.length
+                    ? contacts.filter((c) =>
+                          filters.contacts.filteredIds.includes(c.id)
+                      )
+                    : contacts
+                )?.map((c) => (
                     <Contact key={c.id} contact={c} />
                 ))}
             </div>

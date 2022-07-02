@@ -46,6 +46,10 @@ const ContactForm = () => {
         closeModal()
     }
 
+    const handleChange = (e) => {
+        handleContactForm({ ...contactForm, [e.target.name]: e.target.value })
+    }
+
     const fetchRandomImage = async () => {
         let user = await fetchOneUser()
         changePicture(user[0].picture.large)
@@ -72,7 +76,7 @@ const ContactForm = () => {
                         name="firstName"
                         id="firstName"
                         value={contactForm.firstName}
-                        onChange={handleContactForm}
+                        onChange={handleChange}
                     />
 
                     <label htmlFor="lastName">lastName</label>
@@ -81,7 +85,7 @@ const ContactForm = () => {
                         name="lastName"
                         id="lastName"
                         value={contactForm.lastName}
-                        onChange={handleContactForm}
+                        onChange={handleChange}
                     />
 
                     <label htmlFor="phone">phone</label>
@@ -90,7 +94,7 @@ const ContactForm = () => {
                         name="phone"
                         id="phone"
                         value={contactForm.phone}
-                        onChange={handleContactForm}
+                        onChange={handleChange}
                     />
 
                     <label htmlFor="street">Street</label>
@@ -99,7 +103,7 @@ const ContactForm = () => {
                         name="street"
                         id="street"
                         value={contactForm.street}
-                        onChange={handleContactForm}
+                        onChange={handleChange}
                     />
 
                     <label htmlFor="number">number</label>
@@ -108,7 +112,7 @@ const ContactForm = () => {
                         name="number"
                         id="number"
                         value={contactForm.number}
-                        onChange={handleContactForm}
+                        onChange={handleChange}
                     />
 
                     <label htmlFor="city">city</label>
@@ -117,7 +121,7 @@ const ContactForm = () => {
                         name="city"
                         id="city"
                         value={contactForm.city}
-                        onChange={handleContactForm}
+                        onChange={handleChange}
                     />
 
                     <label htmlFor="country">country</label>
@@ -126,7 +130,7 @@ const ContactForm = () => {
                         name="country"
                         id="country"
                         value={contactForm.country}
-                        onChange={handleContactForm}
+                        onChange={handleChange}
                     />
                 </form>
                 <button onClick={handleSubmit}>Save</button>

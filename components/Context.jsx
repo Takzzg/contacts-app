@@ -2,6 +2,8 @@ import { createContext, useEffect, useState } from "react"
 import { fetchAllUsers } from "../utils/api"
 import { getLocalSotage, setLocalStorage } from "../utils/localStorage"
 
+const initialStorage = { contacts: [], groups: [] }
+const initialModal = null
 const initialContactForm = {
     firstName: "",
     lastName: "",
@@ -12,16 +14,30 @@ const initialContactForm = {
     phone: "",
     picture: ""
 }
-
 const initialGroupForm = { name: "", desc: "" }
+const initialFilters = {
+    contacts: {
+        filteredIds: [],
+        direction: "asc",
+        byGroup: null,
+        byField: { name: null, value: null }
+    },
+    groups: {
+        filteredIds: [],
+        direction: "asc",
+        byContact: null,
+        byField: { name: null, value: null }
+    }
+}
 
 export const MyContext = createContext(null)
 
 export const MyProvider = ({ children }) => {
-    const [storage, setStorage] = useState({ contacts: [], groups: [] })
-    const [modal, setModal] = useState(null)
+    const [storage, setStorage] = useState(initialStorage)
+    const [modal, setModal] = useState(initialModal)
     const [contactForm, setContactForm] = useState(initialContactForm)
     const [groupForm, setGroupForm] = useState(initialGroupForm)
+    const [filters, setFilters] = useState(initialFilters)
 
     useEffect(() => {
         let local = getLocalSotage()
@@ -67,8 +83,8 @@ export const MyProvider = ({ children }) => {
         toggleContactForm()
     }
 
-    const handleContactForm = (e) => {
-        setContactForm({ ...contactForm, [e.target.name]: e.target.value })
+    const handleContactForm = (newFrom) => {
+        setContactForm({ ...newFrom })
     }
 
     const changePicture = (picture) => {
@@ -86,8 +102,21 @@ export const MyProvider = ({ children }) => {
         toggleGroupForm()
     }
 
-    const handleGroupForm = (e) => {
-        setGroupForm({ ...groupForm, [e.target.name]: e.target.value })
+    const handleGroupForm = (newFrom) => {
+        setGroupForm({ ...newFrom })
+    }
+
+    // Filters
+
+    const filterContactsByGroup = (id) => {
+        let contacts = [...storage.contacts]
+        let oldFilters = { ...filters }
+
+        oldFilters.contacts.filteredIds = contacts
+            .filter((c) => c.groups.includes(id))
+            .map((c) => c.id)
+
+        setFilters(oldFilters)
     }
 
     // Contacts
@@ -237,30 +266,36 @@ export const MyProvider = ({ children }) => {
     return (
         <MyContext.Provider
             value={{
+                // Forms
                 modal,
+                contactForm,
+                groupForm,
                 toggleContactForm,
                 toggleGroupForm,
                 closeModal,
                 editContact,
                 editGroup,
-                contactForm,
-                groupForm,
                 handleContactForm,
                 handleGroupForm,
                 changePicture,
+                // Contacts
                 contacts: storage.contacts,
-                groups: storage.groups,
                 fetchMoreContacts,
                 deleteAllContacts,
-                deleteAllGroups,
                 createContact,
                 deleteContact,
                 updateContact,
+                // Groups
+                groups: storage.groups,
+                deleteAllGroups,
                 createGroup,
                 deleteGroup,
                 updateGroup,
                 addContactToGroup,
-                removeContactFromGroup
+                removeContactFromGroup,
+                // Filters
+                filters,
+                filterContactsByGroup
             }}
         >
             {children}
