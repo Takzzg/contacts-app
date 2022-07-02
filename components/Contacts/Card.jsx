@@ -5,7 +5,7 @@ import { MyContext } from "../Context"
 import styled from "styled-components"
 import { useDrag } from "react-dnd"
 
-const StyledContact = styled.li`
+const StyledContact = styled.div`
     display: grid;
     grid-template-columns: auto 1fr;
 

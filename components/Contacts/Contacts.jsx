@@ -31,11 +31,11 @@ const Contacts = () => {
             <button onClick={deleteAllContacts}>Delete all contacts</button>
             <button onClick={fetchMoreContacts}>Fetch more Users</button>
 
-            <ul className="contactsList">
+            <div className="contactsList">
                 {contacts?.map((c) => (
                     <Contact key={c.id} contact={c} />
                 ))}
-            </ul>
+            </div>
         </StyledContacts>
     )
 }

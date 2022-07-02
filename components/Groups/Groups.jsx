@@ -13,11 +13,11 @@ const Groups = () => {
             <button onClick={toggleGroupForm}>create new Group</button>
             <button onClick={deleteAllGroups}>delete all groups</button>
 
-            <ul className="groupsList">
+            <div className="groupsList">
                 {groups?.map((g) => (
                     <Group key={g.id} group={g} />
                 ))}
-            </ul>
+            </div>
         </div>
     )
 }
