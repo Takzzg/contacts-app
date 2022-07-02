@@ -3,16 +3,10 @@ export const getLocalSotage = () => {
         window.localStorage.getItem("contacts-app-contacts")
     )
     let groups = JSON.parse(window.localStorage.getItem("contacts-app-groups"))
-
-    // console.log("local contacts => ", contacts, "local groups => ", groups)
-
     return { contacts, groups }
 }
 
 export const setLocalStorage = ({ contacts = [], groups = [] }) => {
-    // console.log(
-    //     `setting localStorage to: \n - Users => ${contacts} \n - Groups => ${groups}`
-    // )
     window.localStorage.setItem(
         "contacts-app-contacts",
         JSON.stringify(contacts)

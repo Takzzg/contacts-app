@@ -1,5 +1,5 @@
 import Image from "next/image"
-import React, { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { fetchOneUser } from "../../utils/api"
 import { MyContext } from "../Context"
 import Modal from "../Modal"

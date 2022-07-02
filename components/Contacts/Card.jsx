@@ -1,5 +1,5 @@
 import Image from "next/image"
-import React, { useContext } from "react"
+import { useContext } from "react"
 import { MyContext } from "../Context"
 
 import styled from "styled-components"
