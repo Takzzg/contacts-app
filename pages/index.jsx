@@ -1,11 +1,12 @@
 import Head from "next/head"
+import { useContext } from "react"
+import { DndProvider } from "react-dnd"
+import { HTML5Backend } from "react-dnd-html5-backend"
 
 import GlobalStyles from "../styles/GlobalStyles"
 import { StyledIndex } from "../styles/index.styles"
 
-import { useContext, useEffect } from "react"
 import { MyContext } from "../components/Context"
-import { DragDropContext, resetServerContext } from "react-beautiful-dnd"
 import Contacts from "../components/Contacts/Contacts"
 import Groups from "../components/Groups/Groups"
 import GroupForm from "../components/Groups/Form"
@@ -31,15 +32,10 @@ export default function Home() {
             {modal === "contact" && <ContactForm />}
             {modal === "group" && <GroupForm />}
 
-            <DragDropContext id>
+            <DndProvider backend={HTML5Backend}>
                 <Contacts />
                 <Groups />
-            </DragDropContext>
+            </DndProvider>
         </StyledIndex>
     )
-}
-
-export async function getServerSideProps() {
-    resetServerContext()
-    return { props: {} }
 }
