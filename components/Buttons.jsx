@@ -26,7 +26,7 @@ const StyledIconButton = styled(Generic)`
     width: 100%;
 `
 
-const IconButton = ({ onClick, showText = true, Icon, text }) => {
+export const IconButton = ({ onClick, showText = true, Icon, text }) => {
     return (
         <StyledIconButton onClick={onClick}>
             <Icon /> {showText && text}

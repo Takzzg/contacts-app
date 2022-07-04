@@ -10,7 +10,7 @@ import {
     FaUser,
     FaUsers
 } from "react-icons/fa"
-import { Delete, Edit } from "../Buttons"
+import { Delete, Edit, IconButton } from "../Buttons"
 
 const StyledGroup = styled.div`
     display: flex;
@@ -29,6 +29,12 @@ const StyledGroup = styled.div`
             justify-content: center;
             gap: 0.5rem;
         }
+
+        .buttons {
+            display: flex;
+            gap: 00.25rem;
+            align-items: flex-start;
+        }
     }
 
     .desc {
@@ -36,24 +42,6 @@ const StyledGroup = styled.div`
     }
 
     .contacts {
-        .title {
-            display: flex;
-            align-items: center;
-            font-size: 1.1rem;
-            cursor: pointer;
-            padding: 1rem;
-
-            .arrow {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            &:hover {
-                background-color: rgba(64, 224, 208, 0.5);
-            }
-        }
-
         .details {
             display: flex;
             flex-direction: column;
@@ -72,33 +60,16 @@ const StyledGroup = styled.div`
                     justify-content: center;
                     gap: 0.5rem;
                 }
-
-                .remove {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    padding: 0.5rem;
-                    cursor: pointer;
-
-                    &:hover {
-                        background-color: red;
-                    }
-                }
             }
         }
 
         ${({ isActive }) =>
-            isActive
-                ? css`
-                      .title {
-                          background-color: rgba(64, 224, 208, 0.5);
-                      }
-                  `
-                : css`
-                      .details {
-                          display: none;
-                      }
-                  `};
+            !isActive &&
+            css`
+                .details {
+                    display: none;
+                }
+            `};
     }
 `
 
@@ -159,21 +130,16 @@ const Group = ({ group }) => {
                 <div className="buttons">
                     <Edit onClick={() => editGroup(group.id)} />
                     <Delete onClick={() => deleteGroup(group.id)} />
-                    {/* <button onClick={() => editGroup(group.id)}>Edit</button>
-                    <button onClick={() => deleteGroup(group.id)}>
-                        Delete
-                    </button> */}
                 </div>
             </div>
 
             <span className="desc">{group.desc}</span>
             <span className="contacts">
-                <div className="title" onClick={handleToggleGroup}>
-                    <span className="arrow">
-                        {isActive ? <FaAngleDown /> : <FaAngleRight />}
-                    </span>
-                    {group.contacts.length} participants
-                </div>
+                <IconButton
+                    onClick={handleToggleGroup}
+                    text={`${group.contacts.length} participants`}
+                    Icon={isActive ? FaAngleDown : FaAngleRight}
+                />
                 <div className="details">
                     {contactsDetails.length
                         ? contactsDetails.map((c) => (
@@ -182,14 +148,12 @@ const Group = ({ group }) => {
                                       <FaUser />
                                       {c.name.last}, {c.name.first} - {c.phone}
                                   </div>
-                                  <div
-                                      className="remove"
+                                  <IconButton
                                       onClick={() =>
                                           removeContactFromGroup(c.id, group.id)
                                       }
-                                  >
-                                      <FaTimes />
-                                  </div>
+                                      Icon={FaTimes}
+                                  />
                               </div>
                           ))
                         : "This group is empty"}

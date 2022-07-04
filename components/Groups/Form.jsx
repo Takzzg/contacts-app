@@ -80,7 +80,7 @@ const GroupForm = () => {
 
     const randomizeGroup = () => {
         let name = loremIpsum({ count: 3, units: "words" })
-        let desc = loremIpsum({ count: 15, units: "words" })
+        let desc = loremIpsum({ count: 10, units: "words" })
         handleGroupForm({ ...groupForm, name, desc })
     }
 
