@@ -9,7 +9,6 @@ import Groups from "../components/Groups/Groups"
 import GroupForm from "../components/Groups/Form"
 import ContactForm from "../components/Contacts/Form"
 import styled from "styled-components"
-import GlobalStyles from "../styles/GlobalStyles"
 import Modal from "../components/Modal"
 
 const StyledIndex = styled.div`
@@ -28,7 +27,6 @@ export default function Home() {
 
     return (
         <StyledIndex>
-            <GlobalStyles />
             <Head>
                 <title>Contacts App</title>
                 <meta
