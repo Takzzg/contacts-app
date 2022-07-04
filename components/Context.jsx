@@ -170,6 +170,9 @@ export const MyProvider = ({ children }) => {
     }
 
     const deleteAllContacts = () => {
+        let result = confirm("Are you sure you want to delete all contacts ?")
+        if (!result) return
+
         let groups = [...storage.groups]
         groups = groups.map((g) => ({ ...g, contacts: [] }))
         handleUpdateState({ contacts: [], groups })
@@ -226,6 +229,9 @@ export const MyProvider = ({ children }) => {
     }
 
     const deleteAllGroups = () => {
+        let result = confirm("Are you sure you want to delete all groups ?")
+        if (!result) return
+
         let contacts = [...storage.contacts]
         contacts = contacts.map((c) => ({ ...c, groups: [] }))
         handleUpdateState({ contacts, groups: [] })

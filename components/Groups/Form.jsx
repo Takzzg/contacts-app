@@ -37,7 +37,10 @@ const CustomInput = ({ prop, text }) => {
 
     return (
         <>
-            <label htmlFor={prop}>{text}</label>
+            <label htmlFor={prop}>
+                {text ||
+                    prop[0].toUpperCase() + prop.substring(1).toLowerCase()}
+            </label>
             <input
                 type="text"
                 name={prop}
@@ -55,15 +58,13 @@ const GroupForm = () => {
         useContext(MyContext)
 
     useEffect(() => {
-        const checkFormErrors = () => {
-            let errors = []
+        let errors = []
 
-            if (!groupForm.name) errors.push("Must have a name")
-            if (!groupForm.desc) errors.push("Must have a description")
+        Object.entries(groupForm).forEach(([key, value]) => {
+            if (!value) errors[key] = `${key} Can't be empty`
+        })
 
-            setformErrors(errors)
-        }
-        checkFormErrors()
+        setformErrors(errors)
     }, [groupForm])
 
     const handleSubmit = () => {
@@ -88,12 +89,15 @@ const GroupForm = () => {
         <StyledGroupForm>
             <span className="title">New Group</span>
             <div className="form">
-                <CustomInput prop="name" text="Name" />
+                <CustomInput prop="name" />
                 <CustomInput prop="desc" text="Description" />
             </div>
             <div className="buttons">
                 <Randomize onClick={randomizeGroup} />
-                <Save onClick={handleSubmit} />
+                <Save
+                    disabled={Object.entries(formErrors).length}
+                    onClick={handleSubmit}
+                />
             </div>
         </StyledGroupForm>
     )

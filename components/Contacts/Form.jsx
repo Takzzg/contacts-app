@@ -16,7 +16,8 @@ const StyledContactForm = styled.div`
     }
 
     .profile {
-        display: flex;
+        display: grid;
+        grid-template-columns: 100px auto;
         align-items: center;
         gap: 1rem;
 
@@ -51,7 +52,10 @@ const CustomInput = ({ prop, text }) => {
 
     return (
         <>
-            <label htmlFor={prop}>{text}</label>
+            <label htmlFor={prop}>
+                {text ||
+                    prop[0].toUpperCase() + prop.substring(1).toLowerCase()}
+            </label>
             <input
                 type="text"
                 name={prop}
@@ -64,7 +68,7 @@ const CustomInput = ({ prop, text }) => {
 }
 
 const ContactForm = () => {
-    const [formErrors, setformErrors] = useState([])
+    const [formErrors, setformErrors] = useState({})
     const {
         contactForm,
         randomizePicture,
@@ -75,10 +79,10 @@ const ContactForm = () => {
     } = useContext(MyContext)
 
     useEffect(() => {
-        let errors = []
+        let errors = {}
 
         Object.entries(contactForm).forEach(([key, value]) => {
-            if (!value) errors.push(`${key} Can't be empty`)
+            if (!value) errors[key] = `${key} Can't be empty`
         })
 
         setformErrors(errors)
@@ -110,15 +114,18 @@ const ContactForm = () => {
             <div className="form">
                 <CustomInput prop="firstName" text="First Name" />
                 <CustomInput prop="lastName" text="Last Name" />
-                <CustomInput prop="phone" text="Phone" />
-                <CustomInput prop="street" text="Street" />
-                <CustomInput prop="number" text="Number" />
-                <CustomInput prop="city" text="City" />
-                <CustomInput prop="country" text="Conutry" />
+                <CustomInput prop="phone" />
+                <CustomInput prop="street" />
+                <CustomInput prop="number" />
+                <CustomInput prop="city" />
+                <CustomInput prop="country" />
             </div>
             <div className="buttons">
                 <Randomize onClick={randomizeContactForm} />
-                <Save onClick={handleSubmit} />
+                <Save
+                    disabled={Object.entries(formErrors).length}
+                    onClick={handleSubmit}
+                />
             </div>
         </StyledContactForm>
     )

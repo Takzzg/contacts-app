@@ -42,6 +42,11 @@ const StyledGroup = styled.div`
     }
 
     .contacts {
+        .title {
+            width: 100%;
+            text-align: left;
+        }
+
         .details {
             display: flex;
             flex-direction: column;
@@ -136,6 +141,7 @@ const Group = ({ group }) => {
             <span className="desc">{group.desc}</span>
             <span className="contacts">
                 <IconButton
+                    className="title"
                     onClick={handleToggleGroup}
                     text={`${group.contacts.length} participants`}
                     Icon={isActive ? FaAngleDown : FaAngleRight}
