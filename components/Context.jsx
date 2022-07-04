@@ -37,6 +37,7 @@ export const MyProvider = ({ children }) => {
     const handleUpdateState = (state) => {
         setStorage(state)
         setLocalStorage(state)
+        filterContactsByGroup(filters.contacts.byGroup)
     }
 
     // Forms
