@@ -1,12 +1,31 @@
 import Image from "next/image"
 import { useContext, useEffect, useState } from "react"
-import { fetchOneUser } from "../../utils/api"
 import { MyContext } from "../Context"
 import Modal from "../Modal"
 import styled from "styled-components"
 
 const StyledContactForm = styled.div`
-    form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .profile {
+        display: flex;
+        /* flex-direction: column; */
+        gap: 1rem;
+
+        .imagePlaceholder {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed whitesmoke;
+        }
+    }
+
+    .form {
         display: grid;
         grid-template-columns: auto 1fr;
         gap: 0.5rem;
@@ -19,24 +38,21 @@ const ContactForm = () => {
     const {
         contactForm,
         handleContactForm,
-        changePicture,
+        randomizePicture,
+        randomizeContactForm,
         closeModal,
         createContact,
         updateContact
     } = useContext(MyContext)
 
     useEffect(() => {
-        const checkFormErrors = () => {
-            let errors = []
+        let errors = []
 
-            if (!contactForm.firstName) errors.push("Must have a first name")
-            if (!contactForm.lastName) errors.push("Must have a last name")
-            if (!contactForm.phone) errors.push("Must have a phone number")
-            if (!contactForm.picture) errors.push("Must have a profile picture")
+        Object.entries(contactForm).forEach(([key, value]) => {
+            if (!value) errors.push(`${key} Can't be empty`)
+        })
 
-            setformErrors(errors)
-        }
-        checkFormErrors()
+        setformErrors(errors)
     }, [contactForm])
 
     const handleSubmit = () => {
@@ -50,27 +66,24 @@ const ContactForm = () => {
         handleContactForm({ ...contactForm, [e.target.name]: e.target.value })
     }
 
-    const fetchRandomImage = async () => {
-        let user = await fetchOneUser()
-        changePicture(user[0].picture.large)
-    }
-
     return (
         <Modal>
             <StyledContactForm>
                 <span className="profile">
-                    {contactForm.picture && (
+                    {contactForm.picture ? (
                         <Image
                             src={contactForm.picture}
                             alt=""
                             width={"100%"}
                             height={"100%"}
                         />
+                    ) : (
+                        <div className="imagePlaceholder">No Image</div>
                     )}
-                    <button onClick={fetchRandomImage}>Random Image</button>
+                    <button onClick={randomizePicture}>Random Image</button>
                 </span>
-                <form>
-                    <label htmlFor="firstName">firstName</label>
+                <div className="form">
+                    <label htmlFor="firstName">First name</label>
                     <input
                         type="text"
                         name="firstName"
@@ -79,7 +92,7 @@ const ContactForm = () => {
                         onChange={handleChange}
                     />
 
-                    <label htmlFor="lastName">lastName</label>
+                    <label htmlFor="lastName">Last name</label>
                     <input
                         type="text"
                         name="lastName"
@@ -88,7 +101,7 @@ const ContactForm = () => {
                         onChange={handleChange}
                     />
 
-                    <label htmlFor="phone">phone</label>
+                    <label htmlFor="phone">Phone</label>
                     <input
                         type="text"
                         name="phone"
@@ -106,7 +119,7 @@ const ContactForm = () => {
                         onChange={handleChange}
                     />
 
-                    <label htmlFor="number">number</label>
+                    <label htmlFor="number">Number</label>
                     <input
                         type="text"
                         name="number"
@@ -115,7 +128,7 @@ const ContactForm = () => {
                         onChange={handleChange}
                     />
 
-                    <label htmlFor="city">city</label>
+                    <label htmlFor="city">City</label>
                     <input
                         type="text"
                         name="city"
@@ -124,7 +137,7 @@ const ContactForm = () => {
                         onChange={handleChange}
                     />
 
-                    <label htmlFor="country">country</label>
+                    <label htmlFor="country">Country</label>
                     <input
                         type="text"
                         name="country"
@@ -132,8 +145,11 @@ const ContactForm = () => {
                         value={contactForm.country}
                         onChange={handleChange}
                     />
-                </form>
-                <button onClick={handleSubmit}>Save</button>
+                </div>
+                <button onClick={handleSubmit} disabled={formErrors.length}>
+                    Save
+                </button>
+                <button onClick={randomizeContactForm}>Randomize</button>
             </StyledContactForm>
         </Modal>
     )

@@ -19,7 +19,7 @@ const StyledModal = styled.div`
         position: absolute;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.75);
+        background-color: rgba(0, 0, 0, 0.9);
         z-index: -1;
     }
 
@@ -28,7 +28,10 @@ const StyledModal = styled.div`
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background-color: whitesmoke;
+        background-color: #161616;
+        overflow: hidden;
+        border-radius: 1rem;
+        padding: 1rem;
     }
 `
 

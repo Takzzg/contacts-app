@@ -33,7 +33,12 @@ const GroupForm = () => {
     const handleSubmit = () => {
         if (formErrors.length) return
         if (groupForm.id) updateGroup(groupForm.id)
-        else createGroup({ ...groupForm, contacts: [] })
+        else
+            createGroup({
+                id: Math.random().toString(36),
+                ...groupForm,
+                contacts: []
+            })
         closeModal()
     }
 

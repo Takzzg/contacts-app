@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react"
-import { fetchAllUsers } from "../utils/api"
+import { fetchAllUsers, fetchOneUser } from "../utils/api"
 import { getLocalSotage, setLocalStorage } from "../utils/localStorage"
 
 const initialStorage = { contacts: [], groups: [] }
@@ -16,18 +16,8 @@ const initialContactForm = {
 }
 const initialGroupForm = { name: "", desc: "" }
 const initialFilters = {
-    contacts: {
-        filteredIds: [],
-        direction: "asc",
-        byGroup: null,
-        byField: { name: null, value: null }
-    },
-    groups: {
-        filteredIds: [],
-        direction: "asc",
-        byContact: null,
-        byField: { name: null, value: null }
-    }
+    contacts: { filteredIds: [], byGroup: null },
+    groups: { filteredIds: [], byContact: null }
 }
 
 export const MyContext = createContext(null)
@@ -87,8 +77,9 @@ export const MyProvider = ({ children }) => {
         setContactForm({ ...newFrom })
     }
 
-    const changePicture = (picture) => {
-        setContactForm({ ...contactForm, picture })
+    const randomizePicture = async () => {
+        let user = await fetchOneUser()
+        setContactForm({ ...contactForm, picture: user[0].picture.large })
     }
 
     const editGroup = (id) => {
@@ -106,13 +97,30 @@ export const MyProvider = ({ children }) => {
         setGroupForm({ ...newFrom })
     }
 
+    const randomizeContactForm = async () => {
+        let contact = await fetchOneUser()
+        contact = contact[0]
+        const newForm = {
+            ...contactForm,
+            firstName: contact.name.first,
+            lastName: contact.name.last,
+            street: contact.location.street.name,
+            number: contact.location.street.number,
+            city: contact.location.city,
+            country: contact.location.country,
+            phone: contact.phone,
+            picture: contact.picture.large
+        }
+        setContactForm(newForm)
+    }
+
     // Filters
 
     const filterContactsByGroup = (id) => {
         let contacts = [...storage.contacts]
         let oldFilters = { ...filters }
 
-        if (oldFilters.contacts.byGroup === id) {
+        if (!id) {
             oldFilters.contacts.byGroup = null
             oldFilters.contacts.filteredIds = []
             return setFilters(oldFilters)
@@ -176,32 +184,31 @@ export const MyProvider = ({ children }) => {
     }
 
     const updateContact = (id) => {
-        let contacts = [...storage.contacts]
+        let newContacts = [...storage.contacts].map((c) =>
+            c.id === id
+                ? {
+                      ...c,
+                      name: {
+                          ...c.name,
+                          first: contactForm.firstName,
+                          last: contactForm.lastName
+                      },
+                      location: {
+                          ...c.location,
+                          street: {
+                              name: contactForm.street,
+                              number: contactForm.number
+                          },
+                          city: contactForm.city,
+                          country: contactForm.country
+                      },
+                      phone: contactForm.phone,
+                      picture: { ...c.picture, large: contactForm.picture }
+                  }
+                : c
+        )
 
-        let contact = contacts.find((c) => c.id === id)
-        contacts = contacts.filter((c) => c.id != id)
-
-        contact = {
-            ...contact,
-            name: {
-                ...contact.name,
-                first: contactForm.firstName,
-                last: contactForm.lastName
-            },
-            location: {
-                ...contact.location,
-                street: {
-                    name: contactForm.street,
-                    number: contactForm.number
-                },
-                city: contactForm.city,
-                country: contactForm.country
-            },
-            phone: contactForm.phone,
-            picture: { ...contact.picture, large: contactForm.picture }
-        }
-
-        handleUpdateState({ ...storage, contacts: [contact, ...contacts] })
+        handleUpdateState({ ...storage, contacts: newContacts })
     }
 
     // Groups
@@ -229,17 +236,17 @@ export const MyProvider = ({ children }) => {
             groups: c.groups.filter((g) => g !== id)
         }))
         let groups = storage.groups.filter((g) => g.id !== id)
+        if (filters.contacts.byGroup === id) filterContactsByGroup(null)
         handleUpdateState({ contacts, groups })
     }
 
     const updateGroup = (id) => {
-        let groups = [...storage.groups]
-        let group = groups.find((g) => g.id === id)
-        groups = groups.filter((g) => g.id !== id)
-
-        group = { ...group, name: groupForm.name, desc: groupForm.desc }
-
-        handleUpdateState({ ...storage, groups: [group, ...groups] })
+        let newGroups = [...storage.groups].map((g) =>
+            g.id === id
+                ? { ...g, name: groupForm.name, desc: groupForm.desc }
+                : g
+        )
+        handleUpdateState({ ...storage, groups: newGroups })
     }
 
     const addContactToGroup = (idContact, idGroup) => {
@@ -253,6 +260,8 @@ export const MyProvider = ({ children }) => {
         !group.contacts.includes(idContact) && group.contacts.push(idContact)
 
         handleUpdateState({ contacts, groups })
+        if (filters.contacts.byGroup)
+            filterContactsByGroup(filters.contacts.byGroup)
     }
 
     const removeContactFromGroup = (idContact, idGroup) => {
@@ -263,11 +272,12 @@ export const MyProvider = ({ children }) => {
         let group = groups.find((g) => g.id === idGroup)
 
         contact.groups.includes(idGroup) &&
-            contact.groups.filter((g) => g !== idGroup)
+            (contact.groups = contact.groups.filter((g) => g !== idGroup))
         group.contacts.includes(idContact) &&
-            group.contacts.filter((c) => c !== idContact)
+            (group.contacts = group.contacts.filter((c) => c !== idContact))
 
         handleUpdateState({ contacts, groups })
+        filterContactsByGroup(group.id)
     }
 
     return (
@@ -277,14 +287,15 @@ export const MyProvider = ({ children }) => {
                 modal,
                 contactForm,
                 groupForm,
-                toggleContactForm,
-                toggleGroupForm,
                 closeModal,
+                toggleContactForm,
                 editContact,
-                editGroup,
+                randomizePicture,
+                randomizeContactForm,
+                toggleGroupForm,
                 handleContactForm,
+                editGroup,
                 handleGroupForm,
-                changePicture,
                 // Contacts
                 contacts: storage.contacts,
                 fetchMoreContacts,

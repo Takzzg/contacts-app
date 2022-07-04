@@ -2,10 +2,27 @@ import { useContext } from "react"
 import styled from "styled-components"
 import { useDrop } from "react-dnd"
 
+import { FaTrash, FaPlus, FaUserAlt, FaUserAltSlash } from "react-icons/fa"
+
 import { MyContext } from "../Context"
 import Contact from "./Card"
+import Header from "../Header"
 
-export const StyledContacts = styled.div``
+export const StyledContacts = styled.div`
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
+
+    .contactsList {
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        height: 100%;
+    }
+`
 
 const Contacts = () => {
     const {
@@ -26,11 +43,22 @@ const Contacts = () => {
 
     return (
         <StyledContacts {...collected} ref={drop} className="contacts">
-            <span className="title">Contacts</span>
+            <Header>
+                <span className="title">Contacts</span>
 
-            <button onClick={toggleContactForm}>Create a new Contact</button>
-            <button onClick={deleteAllContacts}>Delete all contacts</button>
-            <button onClick={fetchMoreContacts}>Fetch more Users</button>
+                <div className="buttons">
+                    <span onClick={toggleContactForm}>
+                        <FaPlus /> <FaUserAlt />
+                    </span>
+                    <span onClick={deleteAllContacts}>
+                        <FaTrash /> <FaUserAltSlash />
+                    </span>
+                    <span onClick={fetchMoreContacts}>
+                        <FaPlus /> 10
+                        <FaUserAlt />
+                    </span>
+                </div>
+            </Header>
 
             <div className="contactsList">
                 {(filters.contacts.filteredIds.length

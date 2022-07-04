@@ -1,24 +1,45 @@
-import React, { useContext } from "react"
+import { useContext } from "react"
+import styled from "styled-components"
 
 import { MyContext } from "../Context"
+import Header from "../Header"
 import Group from "./Card"
+
+const StyledGroups = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow: hidden;
+    height: 100%;
+
+    .groupsList {
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+`
 
 const Groups = () => {
     const { groups, toggleGroupForm, deleteAllGroups } = useContext(MyContext)
 
     return (
-        <div className="groups">
-            <span className="title">Groups</span>
+        <StyledGroups>
+            <Header>
+                <div className="title">Groups</div>
 
-            <button onClick={toggleGroupForm}>create new Group</button>
-            <button onClick={deleteAllGroups}>delete all groups</button>
+                <div className="buttons">
+                    <span onClick={toggleGroupForm}>create new Group</span>
+                    <span onClick={deleteAllGroups}>delete all groups</span>
+                </div>
+            </Header>
 
             <div className="groupsList">
                 {groups?.map((g) => (
                     <Group key={g.id} group={g} />
                 ))}
             </div>
-        </div>
+        </StyledGroups>
     )
 }
 

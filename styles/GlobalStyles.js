@@ -7,6 +7,19 @@ const GlobalStyles = createGlobalStyle`
         margin: 0;
         font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
             Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+        color: whitesmoke;
+        background-color: #161616;
+    }
+
+    input {
+        color: whitesmoke;
+        background-color: #161616;
+        border: none;
+        border-bottom: 1px solid whitesmoke;
+
+        :focus {
+            outline-color: whitesmoke;
+        }
     }
 
     a {
@@ -16,8 +29,6 @@ const GlobalStyles = createGlobalStyle`
 
     * {
         box-sizing: border-box;
-        color: whitesmoke;
-        background-color: #161616;
     }
 `
 

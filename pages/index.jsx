@@ -3,14 +3,24 @@ import { useContext } from "react"
 import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
 
-import GlobalStyles from "../styles/GlobalStyles"
-import { StyledIndex } from "../styles/index.styles"
-
 import { MyContext } from "../components/Context"
 import Contacts from "../components/Contacts/Contacts"
 import Groups from "../components/Groups/Groups"
 import GroupForm from "../components/Groups/Form"
 import ContactForm from "../components/Contacts/Form"
+import styled from "styled-components"
+import GlobalStyles from "../styles/GlobalStyles"
+
+const StyledIndex = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100vw;
+    height: 100vh;
+    padding: 2rem;
+    gap: 1rem;
+`
 
 export default function Home() {
     const { modal } = useContext(MyContext)
@@ -26,8 +36,6 @@ export default function Home() {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-
-            <div className="title">Contacts App</div>
 
             {modal === "contact" && <ContactForm />}
             {modal === "group" && <GroupForm />}
