@@ -111,6 +111,7 @@ const ContactForm = () => {
                 )}
                 <Randomize onClick={randomizePicture} showText={false} />
             </span>
+
             <div className="form">
                 <CustomInput prop="firstName" text="First Name" />
                 <CustomInput prop="lastName" text="Last Name" />
@@ -120,6 +121,7 @@ const ContactForm = () => {
                 <CustomInput prop="city" />
                 <CustomInput prop="country" />
             </div>
+
             <div className="buttons">
                 <Randomize onClick={randomizeContactForm} />
                 <Save
