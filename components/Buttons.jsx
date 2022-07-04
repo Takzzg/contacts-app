@@ -38,13 +38,14 @@ export const Generic = ({ children, onClick, disabled, className }) => {
 
 const StyledIconButton = styled(Generic)`
     display: grid;
+    align-items: center;
+    justify-content: center;
+
     ${({ columns }) =>
         columns &&
         css`
             grid-template-columns: auto 1fr;
         `}
-    align-items: center;
-    justify-content: center;
 `
 
 export const IconButton = ({

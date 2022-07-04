@@ -10,10 +10,6 @@ const StyledHeader = styled.div`
         font-size: 1rem;
         display: flex;
         gap: 1rem;
-
-        span {
-            border-radius: 10px;
-        }
     }
 `
 

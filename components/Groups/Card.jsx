@@ -69,12 +69,17 @@ const StyledGroup = styled.div`
         }
 
         ${({ isActive }) =>
-            !isActive &&
-            css`
-                .details {
-                    display: none;
-                }
-            `};
+            isActive
+                ? css`
+                      .title {
+                          background-color: rgba(64, 224, 208, 0.5);
+                      }
+                  `
+                : css`
+                      .details {
+                          display: none;
+                      }
+                  `};
     }
 `
 
