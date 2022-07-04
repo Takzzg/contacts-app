@@ -44,8 +44,8 @@ export default function Home() {
             )}
 
             <DndProvider backend={HTML5Backend}>
-                <Contacts />
                 <Groups />
+                <Contacts />
             </DndProvider>
         </StyledIndex>
     )

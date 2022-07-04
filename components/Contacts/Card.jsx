@@ -11,10 +11,17 @@ import { Delete, Edit } from "../Buttons"
 
 const StyledContact = styled.div`
     display: grid;
-    grid-template-columns: auto 100px 1fr;
+    grid-template-columns: 1fr 100px auto;
+    grid-template-areas: "info picture buttons";
     grid-template-rows: 100px;
 
+    .profilePic {
+        grid-area: picture;
+        width: 100px;
+    }
+
     .info {
+        grid-area: info;
         display: grid;
         grid-template-columns: auto 1fr;
         align-items: center;
@@ -30,8 +37,13 @@ const StyledContact = styled.div`
     }
 
     .buttons {
+        grid-area: buttons;
         display: grid;
         grid-template-rows: 1fr 1fr;
+
+        & > * {
+            padding: 1rem;
+        }
     }
 `
 const formattedName = (name) => {
