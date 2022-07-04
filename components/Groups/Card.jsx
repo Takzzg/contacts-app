@@ -10,6 +10,7 @@ import {
     FaUser,
     FaUsers
 } from "react-icons/fa"
+import { Delete, Edit } from "../Buttons"
 
 const StyledGroup = styled.div`
     display: flex;
@@ -19,9 +20,9 @@ const StyledGroup = styled.div`
     .header {
         display: flex;
         justify-content: space-between;
-        padding: 1rem;
 
         .name {
+            padding: 1rem;
             font-size: 1.25rem;
             display: flex;
             align-items: center;
@@ -156,10 +157,12 @@ const Group = ({ group }) => {
                     {group.name}
                 </span>
                 <div className="buttons">
-                    <button onClick={() => editGroup(group.id)}>Edit</button>
+                    <Edit onClick={() => editGroup(group.id)} />
+                    <Delete onClick={() => deleteGroup(group.id)} />
+                    {/* <button onClick={() => editGroup(group.id)}>Edit</button>
                     <button onClick={() => deleteGroup(group.id)}>
                         Delete
-                    </button>
+                    </button> */}
                 </div>
             </div>
 

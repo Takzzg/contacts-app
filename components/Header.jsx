@@ -12,16 +12,7 @@ const StyledHeader = styled.div`
         gap: 1rem;
 
         span {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.25rem;
-            padding: 0.5rem;
-            border-radius: 5px;
-
-            &:hover {
-                background-color: rgba(64, 224, 208, 0.5);
-            }
+            border-radius: 10px;
         }
     }
 `

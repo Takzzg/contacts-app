@@ -4,22 +4,15 @@ import { useContext } from "react"
 import styled from "styled-components"
 import { useDrag } from "react-dnd"
 
-import {
-    FaEdit,
-    FaHome,
-    FaPhone,
-    FaUserAlt,
-    FaUserAltSlash,
-    FaUsers
-} from "react-icons/fa"
+import { FaHome, FaPhone, FaUserAlt, FaUsers } from "react-icons/fa"
 
 import { MyContext } from "../Context"
+import { Delete, Edit } from "../Buttons"
 
 const StyledContact = styled.div`
     display: grid;
     grid-template-columns: auto 100px 1fr;
     grid-template-rows: 100px;
-    background-color: rgba(255, 255, 255, 0.05);
 
     .info {
         display: grid;
@@ -27,6 +20,7 @@ const StyledContact = styled.div`
         align-items: center;
         gap: 0.5rem;
         padding: 0.5rem;
+        background-color: rgba(255, 255, 255, 0.05);
 
         span {
             overflow: hidden;
@@ -38,24 +32,12 @@ const StyledContact = styled.div`
     .buttons {
         display: grid;
         grid-template-rows: 1fr 1fr;
-
-        div {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            padding: 0.5rem;
-        }
-
-        .edit:hover {
-            background-color: blue;
-        }
-
-        .delete:hover {
-            background-color: red;
-        }
     }
 `
+const formattedName = (name) => {
+    const { first, last } = name
+    return `${last}, ${first}`
+}
 
 const formattedAddress = (location) => {
     const { street, city, country } = location
@@ -76,15 +58,14 @@ const Contact = ({ contact }) => {
     return (
         <StyledContact ref={drag} {...collected}>
             <span className="buttons">
-                <div className="edit" onClick={() => editContact(contact.id)}>
-                    <FaEdit />
-                </div>
-                <div
-                    className="delete"
+                <Edit
+                    onClick={() => editContact(contact.id)}
+                    showText={false}
+                />
+                <Delete
                     onClick={() => deleteContact(contact.id)}
-                >
-                    <FaUserAltSlash />
-                </div>
+                    showText={false}
+                />
             </span>
 
             <span className="profilePic">
@@ -97,14 +78,10 @@ const Contact = ({ contact }) => {
             </span>
 
             <span className="info">
-                <FaUserAlt />
-                <span>{`${contact.name.last}, ${contact.name.first}`}</span>
-                <FaPhone />
-                <span>{contact.phone}</span>
-                <FaHome />
-                <span>{formattedAddress(contact.location)}</span>
-                <FaUsers />
-                <span>In {contact.groups?.length} group(s)</span>
+                <FaUserAlt /> <span>{formattedName(contact.name)}</span>
+                <FaPhone /> <span>{contact.phone}</span>
+                <FaHome /> <span>{formattedAddress(contact.location)}</span>
+                <FaUsers /> <span>In {contact.groups?.length} group(s)</span>
             </span>
         </StyledContact>
     )

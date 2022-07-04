@@ -1,5 +1,7 @@
 import { useContext } from "react"
+import { FaPlus, FaTrash, FaUsers, FaUsersSlash } from "react-icons/fa"
 import styled from "styled-components"
+import { Generic } from "../Buttons"
 
 import { MyContext } from "../Context"
 import Header from "../Header"
@@ -29,12 +31,18 @@ const Groups = () => {
                 <div className="title">Groups</div>
 
                 <div className="buttons">
-                    <span onClick={toggleGroupForm}>create new Group</span>
-                    <span onClick={deleteAllGroups}>delete all groups</span>
+                    <Generic onClick={toggleGroupForm}>
+                        <FaPlus /> <FaUsers />
+                    </Generic>
+                    <Generic onClick={deleteAllGroups}>
+                        <FaTrash /> <FaUsersSlash />
+                    </Generic>
                 </div>
             </Header>
 
             <div className="groupsList">
+                {!groups.length && "No groups saved yet"}
+
                 {groups?.map((g) => (
                     <Group key={g.id} group={g} />
                 ))}

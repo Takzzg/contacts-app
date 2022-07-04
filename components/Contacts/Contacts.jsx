@@ -7,6 +7,7 @@ import { FaTrash, FaPlus, FaUserAlt, FaUserAltSlash } from "react-icons/fa"
 import { MyContext } from "../Context"
 import Contact from "./Card"
 import Header from "../Header"
+import { Generic } from "../Buttons"
 
 export const StyledContacts = styled.div`
     display: flex;
@@ -47,20 +48,22 @@ const Contacts = () => {
                 <span className="title">Contacts</span>
 
                 <div className="buttons">
-                    <span onClick={toggleContactForm}>
+                    <Generic onClick={toggleContactForm}>
                         <FaPlus /> <FaUserAlt />
-                    </span>
-                    <span onClick={deleteAllContacts}>
+                    </Generic>
+                    <Generic onClick={deleteAllContacts}>
                         <FaTrash /> <FaUserAltSlash />
-                    </span>
-                    <span onClick={fetchMoreContacts}>
+                    </Generic>
+                    <Generic onClick={fetchMoreContacts}>
                         <FaPlus /> 10
                         <FaUserAlt />
-                    </span>
+                    </Generic>
                 </div>
             </Header>
 
             <div className="contactsList">
+                {!contacts.length && "No contacts saved yet"}
+
                 {(filters.contacts.filteredIds.length
                     ? contacts.filter((c) =>
                           filters.contacts.filteredIds.includes(c.id)

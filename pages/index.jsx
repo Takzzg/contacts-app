@@ -10,6 +10,7 @@ import GroupForm from "../components/Groups/Form"
 import ContactForm from "../components/Contacts/Form"
 import styled from "styled-components"
 import GlobalStyles from "../styles/GlobalStyles"
+import Modal from "../components/Modal"
 
 const StyledIndex = styled.div`
     display: flex;
@@ -37,8 +38,12 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            {modal === "contact" && <ContactForm />}
-            {modal === "group" && <GroupForm />}
+            {modal && (
+                <Modal>
+                    {modal === "contact" && <ContactForm />}
+                    {modal === "group" && <GroupForm />}
+                </Modal>
+            )}
 
             <DndProvider backend={HTML5Backend}>
                 <Contacts />

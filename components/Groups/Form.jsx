@@ -1,13 +1,53 @@
 import { loremIpsum } from "lorem-ipsum"
 import { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
+import { Randomize, Save } from "../Buttons"
 import { MyContext } from "../Context"
-import Modal from "../Modal"
 
 const StyledGroupForm = styled.div`
-    display: grid;
-    grid-template-columns: auto 1fr 1fr;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+    .title {
+        font-size: 1.5rem;
+    }
+
+    .form {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 0.5rem;
+        min-width: 20rem;
+    }
+
+    .buttons {
+        display: flex;
+        gap: 0.5rem;
+    }
 `
+
+const CustomInput = ({ prop, text }) => {
+    const { groupForm, handleGroupForm } = useContext(MyContext)
+
+    const handleChange = (e) => {
+        handleGroupForm({ ...groupForm, [e.target.name]: e.target.value })
+    }
+
+    return (
+        <>
+            <label htmlFor={prop}>{text}</label>
+            <input
+                type="text"
+                name={prop}
+                id={prop}
+                value={groupForm[prop]}
+                onChange={handleChange}
+            />
+        </>
+    )
+}
 
 const GroupForm = () => {
     const [formErrors, setformErrors] = useState([])
@@ -26,10 +66,6 @@ const GroupForm = () => {
         checkFormErrors()
     }, [groupForm])
 
-    const handleChange = (e) => {
-        handleGroupForm({ ...groupForm, [e.target.name]: e.target.value })
-    }
-
     const handleSubmit = () => {
         if (formErrors.length) return
         if (groupForm.id) updateGroup(groupForm.id)
@@ -42,40 +78,24 @@ const GroupForm = () => {
         closeModal()
     }
 
-    const randomizeName = () => {
+    const randomizeGroup = () => {
         let name = loremIpsum({ count: 3, units: "words" })
-        handleGroupForm({ ...groupForm, name })
-    }
-
-    const randomizeDesc = () => {
-        let desc = loremIpsum({ count: 7, units: "words" })
-        handleGroupForm({ ...groupForm, desc })
+        let desc = loremIpsum({ count: 15, units: "words" })
+        handleGroupForm({ ...groupForm, name, desc })
     }
 
     return (
-        <Modal>
-            <StyledGroupForm>
-                <label htmlFor="name">name</label>
-                <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    value={groupForm.name}
-                    onChange={handleChange}
-                />
-                <button onClick={randomizeName}>Random name</button>
-                <label htmlFor="desc">desc</label>
-                <input
-                    type="text"
-                    name="desc"
-                    id="desc"
-                    value={groupForm.desc}
-                    onChange={handleChange}
-                />
-                <button onClick={randomizeDesc}>Random desc</button>
-            </StyledGroupForm>
-            <button onClick={handleSubmit}>Save</button>
-        </Modal>
+        <StyledGroupForm>
+            <span className="title">New Group</span>
+            <div className="form">
+                <CustomInput prop="name" text="Name" />
+                <CustomInput prop="desc" text="Description" />
+            </div>
+            <div className="buttons">
+                <Randomize onClick={randomizeGroup} />
+                <Save onClick={handleSubmit} />
+            </div>
+        </StyledGroupForm>
     )
 }
 
