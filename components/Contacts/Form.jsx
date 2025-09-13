@@ -101,6 +101,7 @@ const ContactForm = () => {
             <span className="profile">
                 {contactForm.picture ? (
                     <Image
+                        unoptimized
                         src={contactForm.picture}
                         alt=""
                         width={"100%"}
