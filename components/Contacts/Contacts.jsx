@@ -55,8 +55,7 @@ const Contacts = () => {
                         <FaTrash /> <FaUserAltSlash />
                     </Generic>
                     <Generic onClick={fetchMoreContacts}>
-                        <FaPlus /> 10
-                        <FaUserAlt />
+                        <FaPlus /> 10 <FaUserAlt />
                     </Generic>
                 </div>
             </Header>
@@ -65,13 +64,9 @@ const Contacts = () => {
                 {!contacts.length && "No contacts saved yet"}
 
                 {(filters.contacts.filteredIds.length
-                    ? contacts.filter((c) =>
-                          filters.contacts.filteredIds.includes(c.id)
-                      )
+                    ? contacts.filter((c) => filters.contacts.filteredIds.includes(c.id))
                     : contacts
-                )?.map((c) => (
-                    <Contact key={c.id} contact={c} />
-                ))}
+                )?.map((c) => (<Contact key={c.id} contact={c} />))}
             </div>
         </StyledContacts>
     )

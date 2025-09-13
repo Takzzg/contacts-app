@@ -62,9 +62,7 @@ const Contact = ({ contact }) => {
     const [collected, drag] = useDrag(() => ({
         type: "Contact",
         item: { id: contact.id },
-        collect: (monitor) => ({
-            isDragging: monitor.isDragging()
-        })
+        collect: (monitor) => ({ isDragging: monitor.isDragging() })
     }))
 
     return (
@@ -82,6 +80,7 @@ const Contact = ({ contact }) => {
 
             <span className="profilePic">
                 <Image
+                    unoptimized
                     src={contact.picture.large}
                     alt=""
                     width={"100%"}
