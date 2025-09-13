@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react"
-import { fetchAllUsers, fetchOneUser } from "../utils/api"
+import { fetchTenUsers, fetchOneUser } from "../utils/api"
 import { getLocalSotage, setLocalStorage } from "../utils/localStorage"
 
 const initialStorage = { contacts: [], groups: [] }
@@ -138,7 +138,7 @@ export const MyProvider = ({ children }) => {
     // Contacts
 
     const fetchMoreContacts = async () => {
-        let contacts = await fetchAllUsers()
+        let contacts = await fetchTenUsers()
         handleUpdateState({
             ...storage,
             contacts: [...storage.contacts, ...contacts]

@@ -1,14 +1,16 @@
-export const fetchAllUsers = () =>
+export const fetchTenUsers = () =>
     fetch(`https://randomuser.me/api/?results=10`)
         .then((res) => res.json())
         .then((data) => data.results)
-        .then((contacts) =>
-            contacts.map((c) => ({
+        .then((contacts) => {
+            console.log(contacts[0]);
+
+            return contacts.map((c) => ({
                 ...c,
                 id: Math.random().toString(36),
                 groups: []
             }))
-        )
+        })
 
 export const fetchOneUser = () =>
     fetch(`https://randomuser.me/api`)
