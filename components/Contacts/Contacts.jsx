@@ -51,11 +51,11 @@ const Contacts = () => {
                     <Generic onClick={toggleContactForm}>
                         <FaPlus /> <FaUserAlt />
                     </Generic>
-                    <Generic onClick={deleteAllContacts}>
-                        <FaTrash /> <FaUserAltSlash />
-                    </Generic>
                     <Generic onClick={fetchMoreContacts}>
                         <FaPlus /> 10 <FaUserAlt />
+                    </Generic>
+                    <Generic onClick={deleteAllContacts}>
+                        <FaTrash /> <FaUserAltSlash />
                     </Generic>
                 </div>
             </Header>
