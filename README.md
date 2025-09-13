@@ -49,6 +49,8 @@ To add a contact to a group, simply drag and drop the contact over the desired g
 
 5. Open http://localhost:3000 in your browser
 
+--- 
+
 <details>
 <summary>Update 2025</summary>
 
@@ -57,6 +59,8 @@ To add a contact to a group, simply drag and drop the contact over the desired g
 - sort contacts section top buttons
 - update README.md
 </details>
+
+---
 
 <details>
     <summary>Original Next.js README.md</summary>
