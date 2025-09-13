@@ -5,7 +5,7 @@ const nextConfig = {
         styledComponents: true
     },
     images: {
-        domains: ["randomuser.me"]
+        domains: ["https://randomuser.me"]
     }
 }
 
